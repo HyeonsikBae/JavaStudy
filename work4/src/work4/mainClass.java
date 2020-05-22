@@ -167,7 +167,6 @@ public class mainClass {
 	*/
 	
 	//Problem8
-	/*
 	public static void main(String[] args) {
 		
 		Scanner scanner = new Scanner(System.in);
@@ -190,5 +189,4 @@ public class mainClass {
 		
 		scanner.close();
 	}
-	*/
 }
