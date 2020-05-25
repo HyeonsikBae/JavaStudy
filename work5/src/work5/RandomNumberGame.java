@@ -10,14 +10,16 @@ public class RandomNumberGame {
 		Random random = new Random();
 		Scanner scanner = new Scanner(System.in);
 		boolean bool = true;
-		String select;
+		String select = "";
 		
 		while(bool) {
 			select = "";
 			int rand = random.nextInt(100)+1;
 			
 			for(int i=0;i<10;i++) {
+				
 				int guess = 0;
+				
 				while(guess<1||guess>100) {
 					System.out.print((i+1) + "번째 입력 : ");
 					guess = scanner.nextInt();
