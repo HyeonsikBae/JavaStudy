@@ -26,6 +26,7 @@ public class mainClass {
 		==
 		int Array2[][] = new int [3][4]  ==(int []Array2[] = new int [3][4])
 		 */
+		/*
 		int Array2[][] = {
 				{1,2,3,4},
 				{5,6,7,8},
@@ -36,6 +37,13 @@ public class mainClass {
 			for(int j=0;j<Array2[0].length;j++) {
 				System.out.println("Array2["+i+"]["+j+"] : " + Array2[i][j]);
 			}
-		}
+		*/
+		
+		//배열 참조(포인터) : 주소만 접근하면 모든 데이터 접근 가능. 보안에 취약...
+		int arrayTag[] = {11,22,33,44,55};
+		int pArray[] = arrayTag; // 두 배열은 동일한 주소를 참조하게 된다.
+		System.out.println(arrayTag);
+		pArray[1]=222;
+		System.out.println(arrayTag[1]);
 	}
 }

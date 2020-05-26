@@ -30,14 +30,14 @@ public class mainClass {
 		
 		String student[][] = new String[stuNum][4];
 		String subject[] = {"","국어","영어","수학"};
-		String temp = "";	
+		String temp = "";	 
 		
 		for(int i=0;i<stuNum;i++) {
 			scanner.hasNextLine();
 			System.out.print("학생 이름 : ");
 			student[i][0] = scanner.next();
 			for(int j=1;j<student[i].length;j++){
-				System.out.print(student[i][0] + "학생의 " + subject[j] + " 점수 입력 : ");
+				System.out.print(student[i][0] + " 학생의 " + subject[j] + " 점수 입력 : ");
 				temp = scanner.next();
 				for(int k=0;k<temp.length();k++) {
 					if(temp.charAt(k)>'9'||temp.charAt(k)<'0') {
@@ -61,13 +61,14 @@ public class mainClass {
 		System.out.println("평균점수\t" + "국어 : " + avgSubject(student,0,1,stuNum) + 
 										"\t영어 : " + avgSubject(student,0,2,stuNum) + 
 										"\t수학 : " + avgSubject(student,0,3,stuNum));
-		System.out.println("전체평균 : " + (avgSubject(student,0,1,stuNum)+avgSubject(student,0,2,stuNum)+avgSubject(student,0,3,stuNum))/stuNum);
+		System.out.println("전체평균 : " + (avgSubject(student,0,1,stuNum)+avgSubject(student,0,2,stuNum)+avgSubject(student,0,3,stuNum))/3);
 		System.out.println("최고점수\t" + "국어 : " + max(student,0,1,stuNum) + 
 										"\t영어 : " + max(student,0,2,stuNum) + 
 										"\t수학 : " + max(student,0,3,stuNum));
 		System.out.println("최저점수\t" + "국어 : " + min(student,0,1,stuNum) + 
 										"\t영어 : " + min(student,0,2,stuNum) + 
 										"\t수학 : " + min(student,0,3,stuNum));
+		scanner.close();
 	}
 	public static int max(String array[][],int row, int col, int num) {
 		int result = 0;

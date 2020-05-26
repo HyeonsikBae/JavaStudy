@@ -52,7 +52,7 @@ public class mainClass {
 		scanner.close();
 		*/
 		
-		/*
+		
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("입력 : ");
 		String input = scanner.next();
@@ -80,9 +80,6 @@ public class mainClass {
 		else {
 			System.out.println("정수 : " + Integer.parseInt(input));
 		}
-		*/
-		
-		
-		
+		scanner.close();	
 	}
 }
