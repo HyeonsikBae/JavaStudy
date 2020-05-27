@@ -2,7 +2,7 @@ package work4;
 
 import java.util.Scanner;
 
-public class mainClass {
+public class mainClass1 {
 	
 	//Problem1_fibonacci // 추가예정
 	/*
