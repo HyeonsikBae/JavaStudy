@@ -8,7 +8,7 @@ public class mainClass3 {
 	
 	static int max(int array[]) {
 		int length = array.length;
-		int temp = 0;
+		int temp = array[0];
 		
 		for(int i=0;i<length;i++) {
 			if(temp<array[i]) {
