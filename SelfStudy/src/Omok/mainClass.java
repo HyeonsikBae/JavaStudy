@@ -14,20 +14,19 @@ public class mainClass {
 		boolean BnW = true;
 		
 		while(true){
-			System.out.print("µ¹À» ³õÀ¸¼¼¿ä : ");
+			System.out.print("ëŒì„ ë†“ìœ¼ì„¸ìš” : ");
 			int x = scanner.nextInt();
 			int y = scanner.nextInt();
 			if(BnW) {
-				map.mapPoint[x][y]="¡Ü";
+				map.mapPoint[x][y]="â—";
 			}
 			else {
-				map.mapPoint[x][y]="¡Û";
+				map.mapPoint[x][y]="â—‹";
 			}
 			BnW = !BnW;		
 			map.mapPrint();
 		}
 	}
-	
 }
 class Map{
 	
