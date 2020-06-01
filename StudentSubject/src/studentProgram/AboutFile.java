@@ -39,7 +39,7 @@ public class AboutFile {
 	public void dataSave(String data[]) {
 		
 		try {
-			FileWriter fw = new FileWriter(this.studentFile);
+			FileWriter fw = new FileWriter(this.studentFile,true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter pw = new PrintWriter(bw);
 			
@@ -49,7 +49,6 @@ public class AboutFile {
 					pw.println();
 				}
 			}
-			pw.println();
 			System.out.println("데이터 저장 성공");
 			pw.close();
 		}catch(IOException e) {
@@ -107,5 +106,30 @@ public class AboutFile {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public int dataGetIndex(String name) {
+		int count = 0;
+		try {
+			FileReader fr = new FileReader(this.studentFile);
+			BufferedReader br = new BufferedReader(fr);
+			
+			String tempS;
+			
+			while((tempS = br.readLine())!=null) {
+				count++;
+				if(tempS.contains(name)) {
+					break;
+				}
+			}
+			if(tempS.equals("")) {
+				count=0;
+			}
+			br.close();	
+			
+		
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }

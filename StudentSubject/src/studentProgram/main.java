@@ -13,14 +13,255 @@ public class main {
 		AboutFile studentFile = new AboutFile();
 		studentFile.createFile();
 		
-		File file = new File("d:\\temp\\tt.txt");
-		file.createNewFile();
-		String juhong[] = {"주홍","27","88","95","89","주홍d","27","88","95","89","주홍a","27","88","95","89","주홍","27","88","95","89"};
-		studentFile.dataSave(juhong);
+		String student[][] = new String[20][5];
 		
-		studentFile.dataRead(3);
+		for (int i = 0; i < student.length; i++) {
+			for (int j = 0; j < student[i].length; j++) {
+				student[i][j]="";
+			}
+		}
+		
+		boolean replay = true;
+		while(replay) {
+			System.out.println("0. 종료");
+			System.out.println("1. 학생 정보 추가");
+			System.out.println("2. 학생 정보 삭제");
+			System.out.println("3. 학생 정보 검색");
+			System.out.println("4. 학생 정보 수정");
+			System.out.println("5. 학생 정보 출력");
+			System.out.println("6. 과목 평균 출력");
+			System.out.println("7. 전체 평균 출력");
+			System.out.println("8. 성적 등수 출력");
+			switch(menuSelect()) {
+				case 0:
+					replay = false;
+					System.out.println("종료되었습니다.");
+					break;
+				case 1:
+					insert(studentFile);
+					break;
+				case 2:
+					delete(student,studentFile);
+					break;
+				case 3:
+					find(student,studentFile);
+					break;
+				case 4:
+					edit(student);
+					break;
+				case 5:
+					studentFile.dataReadAll();
+					break;
+				case 6:
+					avgSubject(student);
+					break;
+				case 7:
+					avgTotal(student);
+					break;
+				case 8:
+					sortAvg(student);
+					break;	
+			}
+		}
+		
 		System.out.println();
-		studentFile.dataReadAll();
 		scanner.close();
+	}
+	static int getNameIndex(String student[][],String name) {
+		int findIndex = -1;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals(name)) {
+				findIndex = i;
+				break;
+			}
+		}
+		return findIndex;
+	}
+	static int menuSelect() {
+		Scanner scanner = new Scanner(System.in);
+		int menu = 0;
+		String menuStr = "";
+		while(true) {
+			System.out.println("메뉴 입력 : ");
+			menuStr = scanner.next();
+			if(menuStr.charAt(0)>='0'&&menuStr.charAt(0)<='9'&&menuStr.length()==1) {
+				break;
+			}
+			else {
+				System.out.println("잘못 입력하셨습니다.");
+			}
+		}
+		menu = Integer.parseInt(menuStr);
+		return menu;
+	}
+	static void insert(AboutFile file) {
+		String field[] = {"이름", "나이", "국어점수", "영어점수", "수학점수"};
+		Scanner scanner = new Scanner(System.in);
+		String temp[] = new String[5];
+		for(int i=0;i<5;i++) {
+			System.out.print(field[i] + " 입력 : ");
+			temp[i] = scanner.next();
+		}
+		file.dataSave(temp);
+	}
+	static void delete(String student[][],AboutFile file) {
+		String nullData[] = new String[5];
+		System.out.print("삭제할 학생의 이름 입력 : ");
+		Scanner scanner = new Scanner(System.in);
+		String name = scanner.next();
+		int findIndex = file.dataGetIndex(name);
+		if(findIndex==-1) {
+			System.out.println(name + "학생은 없습니다.");
+		}
+		else if(findIndex<19) {
+			for (int i = findIndex; i < student.length-1; i++) {
+				for (int j = 0; j < student[i].length; j++) {	
+					student[i][j] = student[i+1][j];
+					student[i+1][j] = "";
+				}
+			}
+		}
+		else {
+			for(int i=0;i<5;i++) {
+				student[19][i]="";
+			}
+		}
+	}
+	static void find(String student[][],AboutFile file) {
+		System.out.print("검색할 학생의 이름 입력 : ");
+		Scanner scanner = new Scanner(System.in);
+		String name = scanner.next();
+		int findIndex = file.dataGetIndex(name);
+		if(findIndex==0) {
+			System.out.println(name + "학생은 없습니다.");
+		}
+		else {
+			file.dataRead(findIndex);
+		}
+	}
+	static void edit(String student[][]) {
+		Scanner scanner = new Scanner(System.in);
+		String field[] = {"이름", "나이", "국어점수", "영어점수", "수학점수"};
+		System.out.print("수정할 학생의 이름 입력 : ");
+		String name = scanner.next();
+		int findIndex = -1;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals(name)) {
+				findIndex = i;
+				break;
+			}
+		}
+		if(findIndex==-1) {
+			System.out.println(name + "학생은 없습니다.");
+		}
+		else {
+			for(int i=0;i<5;i++) {
+				System.out.print(field[i] + " 입력 : ");
+				student[findIndex][i] = scanner.next();
+			}
+			System.out.println(java.util.Arrays.toString(student[findIndex]));
+		}
+	}
+	/*
+	static void output(String student[][],AboutFile file) {
+		int findIndex = -1;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals("")) {
+				findIndex = i;
+				break;
+			}
+		}
+		file.dataReadAll();
+	}
+	*/
+	static void avgSubject(String student[][]) {
+		String field[] = {"국어점수", "영어점수", "수학점수"};
+		int findIndex = 0;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals("")) {
+				findIndex = i;
+				break;
+			}
+		}
+		int avg[] = new int[3];
+		for(int i=2;i<5;i++) {
+			int sum = 0;
+			for(int j=0;j<findIndex;j++) {
+				sum += Integer.parseInt(student[j][i]);
+			}
+			avg[i-2] = sum/findIndex;
+		}
+		for(int i=0;i<3;i++) {
+			System.out.println(field[i] + "의 평균 : " + avg[i]);
+		}
+	}
+	static void avgTotal(String student[][]) {
+		int findIndex = 0;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals("")) {
+				findIndex = i;
+				break;
+			}
+		}
+		int avg[] = new int[3];
+		for(int i=2;i<5;i++) {
+			int sum = 0;
+			for(int j=0;j<findIndex;j++) {
+				sum += Integer.parseInt(student[j][i]);
+			}
+			avg[i-2] = sum/findIndex;
+		}
+		double avgTotal = ((double)avg[0]+avg[1]+avg[2])/3;
+		System.out.println("전체평균 : "+ avgTotal);
+	}
+	static void sortAvg(String student[][]) {
+		int findIndex = 0;
+		for(int i=0;i<student.length;i++) {
+			if(student[i][0].equals("")) {
+				findIndex = i;
+				break;
+			}
+		}
+		String sortName[] = new String[findIndex];
+		for(int i=0;i<findIndex;i++) {
+			sortName[i] = student[i][0];
+		}
+		int sort[] = new int[findIndex];
+		for(int i=0;i<findIndex;i++) {
+			int sum = 0;
+			for(int j=2;j<5;j++) {
+				sum += Integer.parseInt(student[i][j]);
+			}
+			sort[i] = sum/3;
+		}
+		
+		sorting(sort,sortName);
+		
+		for(int i=0;i<findIndex;i++) {
+			System.out.println(i+1 + "등 : " + sortName[i] +" "+ sort[i]+"점");
+		}
+	}
+	static void swapInt(int array[], int a, int b) {
+		int temp = 0;
+		temp = array[a];
+		array[a] = array[b];
+		array[b] = temp;
+	}
+	static void swapStr(String array[], int a, int b) {
+		String temp = "";
+		temp = array[a];
+		array[a] = array[b];
+		array[b] = temp;
+	}
+	static void sorting(int arrScore[],String arrName[]) {
+		
+		for(int i=0;i<arrScore.length-1;i++) {
+			for(int j=i+1;j<arrScore.length;j++) {
+				if(arrScore[i]<arrScore[j]) {
+					swapInt(arrScore,i,j);
+					swapStr(arrName,i,j);
+				}
+			}
+		}
 	}
 }
