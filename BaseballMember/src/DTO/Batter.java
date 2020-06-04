@@ -44,7 +44,7 @@ public class Batter extends Human {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nBatter [batcount=" + batcount + ", hit=" + hit + ", hitAvg=" + hitAvg + "]";
+		return super.toString() + " batcount=" + batcount + ", hit=" + hit + ", hitAvg=" + hitAvg + "]";
 	}
 	
 }

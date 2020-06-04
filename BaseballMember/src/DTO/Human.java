@@ -3,6 +3,7 @@ package DTO;
 //DTO:Data Transfer Object
 //=VO:Value Object
 public class Human {
+	private String type;
 	private int number; // 번호
 						// sequence number 중복되지 않는 번호
 	private String name; // 이름
@@ -12,12 +13,21 @@ public class Human {
 	public Human() {
 	}
 
-	public Human(int number, String name, int age, double height) {
+	public Human(String type, int number, String name, int age, double height) {
 		super();
+		this.type = type;
 		this.number = number;
 		this.name = name;
 		this.age = age;
 		this.height = height;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getNumber() {
@@ -54,7 +64,7 @@ public class Human {
 
 	@Override
 	public String toString() {
-		return "Human [number=" + number + ", name=" + name + ", age=" + age + ", height=" + height + "]";
+		return "[type=" + type + ", number=" + number + ", name=" + name + ", age=" + age + ", height=" + height + ",";
 	}
 	
 }

@@ -1,4 +1,4 @@
-package FileManagement;
+package AboutFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,37 +11,57 @@ import java.util.Scanner;
 import DAO.*;
 import DTO.*;
 
-public class FileManagement {
-	File file;
-	public FileManagement(){
+public class AboutFile {
+	private static File file;
+	public AboutFile(){
 		
 	}
+	/*
 	public void createFile(){
 		try {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("팀 이름을 입력해주세요.");
 		System.out.print(">>> ");
 		String team = scanner.next();
-		file = new File("d:\\temp\\"+team+".txt");
-		file.createNewFile();
+		this.file = new File("d:\\temp\\"+team+".txt");
+		this.file.createNewFile();
+		}catch(IOException e) {
+			e.getStackTrace();
+		}
+	}
+	*/
+	
+	public void createFile(String team){
+		try {
+			file = new File("d:\\temp\\"+team+".txt");
+			file.createNewFile();
 		}catch(IOException e) {
 			e.getStackTrace();
 		}
 	}
 	
-	public void fileRead(File file,Human player[]) {
+	
+	 
+	public void fileRead(Human player[]) {
 		try {
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
-		int count = player.length;
+		int count = 0;		
 		String temp="";
+		while((temp=br.readLine())!=null) {
+			count++;
+		}
+		
+		br.close();
+		fr = new FileReader(file);
+		br = new BufferedReader(fr);
+		
 		String strRead[] = new String[count];
 		int i=0;
 		while((temp=br.readLine())!=null) {
 			strRead[i] = temp;
 			i++;
 		}
-		
 		for(int j=0;j<count;j++) {
 			System.out.println(strRead[j]);
 		}
@@ -51,7 +71,24 @@ public class FileManagement {
 		}
 	}
 	
-	public void fileWrite(File file,Human player[]) {
+	public void fileWrite(Human player[]) {
+		try {
+			FileWriter fw = new FileWriter(file,true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter pw = new PrintWriter(bw);
+			if(file.exists()) {
+				for(int i=0;i<player.length;i++) {
+					pw.println(player[i]);
+				}
+			}
+			System.out.println("저장 성공");
+			pw.close();
+		}catch(Exception e) {
+			System.out.println("저장 실패");
+		}
+		
+	}
+	public void fileWriteWithDelete(Human player[]) {
 		try {
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -61,10 +98,10 @@ public class FileManagement {
 					pw.println(player[i]);
 				}
 			}
+			System.out.println("저장 성공");
 			pw.close();
 		}catch(Exception e) {
 			System.out.println("저장 실패");
 		}
-		System.out.println("저장 성공");
 	}
 }

@@ -1,16 +1,19 @@
 package DAO;
 import java.util.Scanner;
 
+import AboutFile.*;
 import DTO.*;
-import FileManagement.*;
+import Menu.*;
+
 //DAO:Data Access Object = model = back end
 public class MemberDao {
 	// 데이터 담을 배열 필요
 	private int type;
 	Human player[] = new Human[0];
+	AboutFile file = new AboutFile();
 	
 	public MemberDao() {
-
+		file.fileRead(player);
 	}
 	
 	public void insert() {
@@ -34,6 +37,7 @@ public class MemberDao {
 			setPitcher(temp);
 		}
 		player = temp;
+		file.fileWrite(player);
 	}
 	
 	public void delete() {
@@ -56,6 +60,7 @@ public class MemberDao {
 				temp[j] = player[j+1];
 			}
 			player = temp;
+			file.fileWriteWithDelete(player);
 			System.out.println(playerNumber+"번 선수가 삭제되었습니다.");
 		}
 	}
@@ -127,6 +132,7 @@ public class MemberDao {
 		System.out.print("선수 타율 입력 : ");
 		double hitAvg = scanner.nextDouble();
 
+		temp[temp.length-1].setType("타자");
 		temp[temp.length-1].setNumber(number);
 		temp[temp.length-1].setName(name);
 		temp[temp.length-1].setAge(age);
@@ -153,6 +159,7 @@ public class MemberDao {
 		System.out.print("선수 타율 입력 : ");
 		double hitAvg = scanner.nextDouble();
 
+		player[i].setType("타자");
 		player[i].setNumber(number);
 		player[i].setName(name);
 		player[i].setAge(age);
@@ -178,6 +185,7 @@ public class MemberDao {
 		System.out.print("선수 방어율 입력 : ");
 		double defence = scanner.nextDouble();
 
+		temp[temp.length-1].setType("투수");
 		temp[temp.length-1].setNumber(number);
 		temp[temp.length-1].setName(name);
 		temp[temp.length-1].setAge(age);
@@ -203,7 +211,7 @@ public class MemberDao {
 		System.out.print("선수 방어율 입력 : ");
 		double defence = scanner.nextDouble();
 
-		player[i].setNumber(number);
+		player[i].setType("투수");
 		player[i].setName(name);
 		player[i].setAge(age);
 		player[i].setHeight(height);

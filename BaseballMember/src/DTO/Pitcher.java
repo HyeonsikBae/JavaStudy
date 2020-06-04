@@ -42,7 +42,7 @@ public class Pitcher extends Human {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nPitcher [win=" + win + ", lose=" + lose + ", defence=" + defence + "]";
+		return super.toString() + " win=" + win + ", lose=" + lose + ", defence=" + defence + "]";
 	}
 	
 }
