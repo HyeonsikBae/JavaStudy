@@ -2,69 +2,62 @@ package DAO;
 import java.util.Scanner;
 
 import DTO.*;
+import FileManagement.*;
 //DAO:Data Access Object = model = back end
 public class MemberDao {
 	// 데이터 담을 배열 필요
 	private int type;
-	private static int Count = 0;
-	Human player[] = new Human[20];
-	public void arrayAdd() {
-		Human tempPlayer[] = new Human[player.length+1];
-	}
-	public void arrayRm() {
-		Human tempPlayer[] = new Human[player.length-1];
-	}
-	public void move1(Human tempPlayer[]) {
-		Human player[] = new Human[tempPlayer.length];
-		for(int i = player.length;i<19;i++) {
-			tempPlayer[i] = player[i];
-		}
-	}
-	public void move(int num) {
-		for(int i = num;i<19;i++) {
-			player[i] = player[i+1];
-		}
-	}
+	Human player[] = new Human[0];
+	
 	public MemberDao() {
-		
+
 	}
 	
 	public void insert() {
 		Scanner scanner = new Scanner(System.in);
+		int length = player.length+1;
+		Human temp[] = new Human[length];
+		for(int i = 0;i<length-1;i++) {
+			temp[i] = player[i];
+		}
+		
 		System.out.println("선수 타입 선택");
 		System.out.println("1. 타자	2. 투수");
 		System.out.println(">>> ");
 		this.type = scanner.nextInt();
-		
 		if(this.type == 1) {
-			player[Count] = new Batter();
-			setBatter();
+			temp[length-1] = new Batter();
+			setBatter(temp);
 		}
 		else {
-			player[Count] = new Pitcher();
-			setPitcher();
+			temp[length-1] = new Pitcher();
+			setPitcher(temp);
 		}
-		System.out.println(((Human)player[Count]).toString());
-		
-		Count++;
+		player = temp;
 	}
 	
 	public void delete() {
 		Scanner scanner = new Scanner(System.in);
-		boolean check = false;
+		int length = player.length;
+		Human temp[] = new Human[length-1];
 		int i=0;
 		System.out.println("삭제할 선수의 번호를 입력하세요.");
 		System.out.println(">>> ");
 		int playerNumber = scanner.nextInt();
-		if(Count==0) System.out.println("현재 선수가 아무도 없습니다.");
+		if(player.length==0) System.out.println("현재 선수가 아무도 없습니다.");
 		else i = search(playerNumber);
-		if (i>=0&&i<=19) {
-			player[i]=null;
-			if(i!=20) move(i);
-			else player[20]=null;
+
+		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");
+		else {
+			for(int j = 0;j<i;j++) {
+				temp[j] = player[j];
+			}
+			for(int j=i;j<length-1;j++) {
+				temp[j] = player[j+1];
+			}
+			player = temp;
 			System.out.println(playerNumber+"번 선수가 삭제되었습니다.");
 		}
-		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");		
 	}
 	
 	public void select() {
@@ -74,10 +67,10 @@ public class MemberDao {
 		System.out.println("찾고 싶은 선수의 번호를 입력하세요.");
 		System.out.println(">>> ");
 		int playerNumber = scanner.nextInt();
-		if(Count==0) System.out.println("현재 선수가 아무도 없습니다.");
+		if(player.length==0) System.out.println("현재 선수가 아무도 없습니다.");
 		else i =search(playerNumber);
-		if(i>=0&&i<=19) System.out.println(((Human)player[i]).toString());
-		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");		
+		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");	
+		else System.out.println(((Human)player[i]).toString());
 	}
 	
 	public void update() {
@@ -87,21 +80,22 @@ public class MemberDao {
 		System.out.println("수정할 선수의 번호를 입력하세요.");
 		System.out.println(">>> ");
 		int playerNumber = scanner.nextInt();
-		if(Count==0) System.out.println("현재 선수가 아무도 없습니다.");
+		if(player.length==0) System.out.println("현재 선수가 아무도 없습니다.");
 		else i =search(playerNumber);
-		if(i>=0&&i<=19) {
+		
+		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");
+		else {
 			if(player[i] instanceof Batter) setBatter(i);
 			else setPitcher(i);
+			System.out.println(i+"번 선수의 정보를 변경하였습니다.");
 		}
-		if(i==-1)System.out.println(playerNumber + "번 선수는 없습니다.");		
 	}
 
 	public void allPrint() {
-		for(int i=0;i<20;i++) {
+		for(int i=0;i<player.length;i++) {
 			System.out.println(player[i].toString());
 		}
 	}
-	
 	
 	public int search(int number) {
 		int i = 0;
@@ -116,8 +110,7 @@ public class MemberDao {
 		return i;
 	}
 	
-	
-	public void setBatter() {
+	public void setBatter(Human temp[]) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("선수 번호 입력 : ");
 		int number = scanner.nextInt();
@@ -134,13 +127,13 @@ public class MemberDao {
 		System.out.print("선수 타율 입력 : ");
 		double hitAvg = scanner.nextDouble();
 
-		player[Count].setNumber(number);
-		player[Count].setName(name);
-		player[Count].setAge(age);
-		player[Count].setHeight(height);
-		((Batter)player[Count]).setBatcount(batCount);
-		((Batter)player[Count]).setHit(hit);
-		((Batter)player[Count]).setHitAvg(hitAvg);
+		temp[temp.length-1].setNumber(number);
+		temp[temp.length-1].setName(name);
+		temp[temp.length-1].setAge(age);
+		temp[temp.length-1].setHeight(height);
+		((Batter)temp[temp.length-1]).setBatcount(batCount);
+		((Batter)temp[temp.length-1]).setHit(hit);
+		((Batter)temp[temp.length-1]).setHitAvg(hitAvg);
 		
 	}
 	public void setBatter(int i) {
@@ -168,7 +161,7 @@ public class MemberDao {
 		((Batter)player[i]).setHit(hit);
 		((Batter)player[i]).setHitAvg(hitAvg);
 	}
-	public void setPitcher() {
+	public void setPitcher(Human temp[]) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("선수 번호 입력 : ");
 		int number = scanner.nextInt();
@@ -185,13 +178,13 @@ public class MemberDao {
 		System.out.print("선수 방어율 입력 : ");
 		double defence = scanner.nextDouble();
 
-		player[Count].setNumber(number);
-		player[Count].setName(name);
-		player[Count].setAge(age);
-		player[Count].setHeight(height);
-		((Pitcher)player[Count]).setWin(win);
-		((Pitcher)player[Count]).setLose(lose);
-		((Pitcher)player[Count]).setDefence(defence);
+		temp[temp.length-1].setNumber(number);
+		temp[temp.length-1].setName(name);
+		temp[temp.length-1].setAge(age);
+		temp[temp.length-1].setHeight(height);
+		((Pitcher)temp[temp.length-1]).setWin(win);
+		((Pitcher)temp[temp.length-1]).setLose(lose);
+		((Pitcher)temp[temp.length-1]).setDefence(defence);
 	}
 	public void setPitcher(int i) {
 		Scanner scanner = new Scanner(System.in);

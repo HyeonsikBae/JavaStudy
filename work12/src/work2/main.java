@@ -30,9 +30,8 @@ public class main {
 			unit[i].move(x,y);
 		}
 		for(int i=0;i<unit.length;i++) {
-			unit[i].stop();\
+			unit[i].stop();
 			
-			] 
 		}
 	}
 }
