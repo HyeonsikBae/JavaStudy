@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Scanner;
-import DAO.*;
 import Menu.*;
 public class MainClass {
 

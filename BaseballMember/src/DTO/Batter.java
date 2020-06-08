@@ -1,7 +1,5 @@
 package DTO;
 
-import java.util.Scanner;
-
 public class Batter extends Human {
 	private int batcount; // 타수
 	private int hit; // 안타 수
@@ -11,8 +9,15 @@ public class Batter extends Human {
 	
 	}
 	
-	public Batter(int batcount, int hit, double hitAvg) {
-		super();
+	public Batter(String type, int number, String name, int age, double height, int batcount, int hit, double hitAvg) {
+		super(type, number, name, age, height);
+		/*
+		this.setType(type);
+		this.setNumber(number);
+		this.setName(name);
+		this.setAge(age);
+		this.setHeight(height);
+		 */
 		this.batcount = batcount;
 		this.hit = hit;
 		this.hitAvg = hitAvg;
@@ -44,7 +49,7 @@ public class Batter extends Human {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " batcount=" + batcount + ", hit=" + hit + ", hitAvg=" + hitAvg + "]";
+		return super.toString() + batcount + "-" + hit + "-" + hitAvg;
 	}
 	
 }

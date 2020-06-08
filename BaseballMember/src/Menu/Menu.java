@@ -4,12 +4,12 @@ import java.util.Scanner;
 import DAO.*;
 import AboutFile.*;
 public class Menu {
-
+	Scanner scanner = new Scanner(System.in);
 	public Menu() {
 		
 	}
 	public void choiceTeam() {
-		Scanner scanner = new Scanner(System.in);
+		
 		AboutFile afile = new AboutFile();
 		System.out.println("Choice Team");
 		System.out.println("===========");
@@ -39,9 +39,8 @@ public class Menu {
 				break;
 		}	
 	}
-	
+
 	public void menu() {
-		Scanner scanner = new Scanner(System.in);
 		MemberDao dao = new MemberDao();
 		boolean replay = true;
 		while(replay) {
@@ -53,6 +52,9 @@ public class Menu {
 			System.out.println("3. 선수 선택");
 			System.out.println("4. 선수 수정");
 			System.out.println("5. 전체 선수 출력");
+			System.out.println("6. 타율순 타자 출력");
+			System.out.println("7. 방어율순 투수 출력");
+			System.out.println("9. 모두 삭제");
 			System.out.println("0. 종료");
 			System.out.println("==================================");
 			System.out.println("메뉴 선택");
@@ -74,6 +76,15 @@ public class Menu {
 					break;
 				case 5:
 					dao.allPrint();
+					break;
+				case 6:
+					dao.hitAvgLine();
+					break;
+				case 7:
+					dao.defenceLine();
+					break;
+				case 9:
+					dao.allClear();
 					break;
 				case 0:
 					System.out.println("=============시스템 종료=============");

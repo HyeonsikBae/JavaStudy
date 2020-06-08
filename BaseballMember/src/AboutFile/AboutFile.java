@@ -7,45 +7,42 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
-import DAO.*;
 import DTO.*;
 
 public class AboutFile {
-	private static File file;
-	public AboutFile(){
+	private File file;
+	
+	
+	public AboutFile() {
 		
 	}
-	/*
-	public void createFile(){
+	public AboutFile(String team){
+		file = new File("d:\\temp\\"+team+".txt");
+	}
+	
+	public void createFile(String team){
 		try {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("팀 이름을 입력해주세요.");
-		System.out.print(">>> ");
-		String team = scanner.next();
+		
 		this.file = new File("d:\\temp\\"+team+".txt");
 		this.file.createNewFile();
 		}catch(IOException e) {
 			e.getStackTrace();
 		}
 	}
-	*/
 	
-	public void createFile(String team){
+	/*
+	public void createFile(){
 		try {
-			file = new File("d:\\temp\\"+team+".txt");
-			file.createNewFile();
+			if(file.createNewFile()) System.out.println("파일 생성 !");
+			else System.out.println("파일 생성 실패 !");
 		}catch(IOException e) {
 			e.getStackTrace();
 		}
 	}
-	
-	
-	 
-	public void fileRead(Human player[]) {
+	*/
+	public Human[] fileLoad(Human player[]) {
 		try {
-		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
+		BufferedReader br = new BufferedReader(new FileReader(file));
 		int count = 0;		
 		String temp="";
 		while((temp=br.readLine())!=null) {
@@ -53,8 +50,7 @@ public class AboutFile {
 		}
 		
 		br.close();
-		fr = new FileReader(file);
-		br = new BufferedReader(fr);
+		br = new BufferedReader(new FileReader(file));
 		
 		String strRead[] = new String[count];
 		int i=0;
@@ -62,24 +58,47 @@ public class AboutFile {
 			strRead[i] = temp;
 			i++;
 		}
+		
+		player = new Human[count];
+		
 		for(int j=0;j<count;j++) {
-			System.out.println(strRead[j]);
+			String data[]  = strRead[j].split("-");
+			if(data[0].equals("타자")) {
+				player[j] = new Pitcher(data[0],
+										Integer.parseInt(data[1]),
+										data[2],
+										Integer.parseInt(data[3]),
+										Double.parseDouble(data[4]),
+										Integer.parseInt(data[5]),
+										Integer.parseInt(data[6]),
+										Double.parseDouble(data[7])
+										);
+			}		
+			else {
+				player[j] = new Pitcher(data[0],
+										Integer.parseInt(data[1]),
+										data[2],
+										Integer.parseInt(data[3]),
+										Double.parseDouble(data[4]),
+										Integer.parseInt(data[5]),
+										Integer.parseInt(data[6]),
+										Double.parseDouble(data[7])
+										);
+			}
 		}
 		
 		}catch(Exception e) {
 			e.getStackTrace();
 		}
+		return player;
 	}
 	
 	public void fileWrite(Human player[]) {
 		try {
-			FileWriter fw = new FileWriter(file,true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter pw = new PrintWriter(bw);
-			if(file.exists()) {
-				for(int i=0;i<player.length;i++) {
-					pw.println(player[i]);
-				}
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file,true)));
+			
+			for(int i=0;i<player.length;i++) {
+				pw.println(player[i]);
 			}
 			System.out.println("저장 성공");
 			pw.close();
@@ -88,6 +107,7 @@ public class AboutFile {
 		}
 		
 	}
+	
 	public void fileWriteWithDelete(Human player[]) {
 		try {
 			FileWriter fw = new FileWriter(file);

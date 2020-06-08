@@ -64,7 +64,7 @@ public class Human {
 
 	@Override
 	public String toString() {
-		return "[type=" + type + ", number=" + number + ", name=" + name + ", age=" + age + ", height=" + height + ",";
+		return type+"-"+number+"-"+name+"-"+age+"-"+height+"-";
 	}
 	
 }
