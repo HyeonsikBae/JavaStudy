@@ -12,7 +12,6 @@ import DTO.*;
 public class AboutFile {
 	private File file;
 	
-	
 	public AboutFile() {
 		
 	}
