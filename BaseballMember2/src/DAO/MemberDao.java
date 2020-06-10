@@ -23,7 +23,7 @@ public class MemberDao {
 	public MemberDao() {
 		playerList = file.fileLoad(playerList);
 		/*
-		players = new Human[8];
+		Human players = new Human[8];
 		players[0] = new Batter("타자",101,"주홍",25,188.0,30,20,0.33);
 		players[1] = new Pitcher("투수",201,"경호",27,187.3,6,5,4.3);
 		players[2] = new Pitcher("투수",202,"도흠",26,182.1,7,2,6.6);
