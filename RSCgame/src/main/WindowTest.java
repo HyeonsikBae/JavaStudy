@@ -29,6 +29,7 @@ public class WindowTest extends Frame implements WindowListener, ActionListener 
 		player.setBounds(20, 40, 100, 30);
 		player.setBackground(Color.lightGray);
 		player.setText("PLAYER");
+		;
 		add(player);
 		computer = new Label();
 		computer.setBounds(220, 40, 100, 30);
