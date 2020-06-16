@@ -1,15 +1,10 @@
 package main;
 
-import java.awt.List;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import javax.swing.plaf.SliderUI;
 
 import thread.ServerThread;
 
@@ -96,8 +91,8 @@ public class mainClass {
 										   //keep 해야 다른 클라 와도 답 가능.
 			list.add(cliSocket);
 			
-			System.out.println("client IP : "+cliSocket.getInetAddress());
-			System.out.println("client Port : "+cliSocket.getPort());
+			System.out.println("client IP : "+cliSocket.getInetAddress()+"\n");
+			System.out.println("client Port : "+cliSocket.getPort()+"\n");
 			
 			new ServerThread(cliSocket, list).start();
 			}

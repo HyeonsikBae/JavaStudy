@@ -1,19 +1,28 @@
 package main;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
+import gui.*;
 
 import thread.ClientThread;
 
 public class mainClass {
+	
+	static Socket socket = new Socket();
+	private String ip = "";
+	private int port = 0;
+	
+	
+
+	public void write(String packetStr) throws IOException {
+		PrintWriter pw = new PrintWriter(socket.getOutputStream());
+		pw.println(packetStr);
+		pw.flush();
+	}
+	
 	public static void main(String[] args) throws IOException {
 		/*
 			1. 접속해야 할 Server IP 설정
@@ -21,36 +30,31 @@ public class mainClass {
 			3. 접속
 			4. packet을 전송
 		 */
-													//127.0.0.1 < 자기자신		
-		Socket socket = new Socket();
+													//127.0.0.1 < 자기자신
+
+		new Login();
 		
 		try {
-			
-			InetSocketAddress socketAddr = new InetSocketAddress("192.168.7.68",9000);
+			System.out.println(this.ip);
+			System.out.println(this.port+"0");
+			InetSocketAddress socketAddr = new InetSocketAddress(ip,port);
 			while(true) {
 			socket.connect(socketAddr, 100);
 			InetAddress inetAddr;
 			if((inetAddr = socket.getInetAddress())!=null) {
 				System.out.println("Server connect : " + inetAddr);
+				GUI.textArea.append(inetAddr+" 접속 성공"+"\n");
 			}else {
 				System.out.println("Server connect fail");
+				GUI.textArea.append("접속 실패");
 			}
 			
 			ClientThread thread = new ClientThread(socket);
 			thread.start();
 			
-			while(true) {
 			//동기화 필요
 			//send
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("입력 : ");
-			String packetStr = scanner.nextLine();
-			PrintWriter pw = new PrintWriter(socket.getOutputStream());
-			pw.println(packetStr);
-			pw.flush();
-			
-			
-			}
+
 			//receive
 			/*
 			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -64,5 +68,21 @@ public class mainClass {
 			catch(IOException e) {
 			e.getStackTrace();
 		}
+	}
+	
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 }
